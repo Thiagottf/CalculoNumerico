@@ -5,32 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interpolação</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Link do Bulma -->
+    <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Interpolação por Lagrange</h1>
-    <form method="post">
-        <label>Número de Pontos: <input type="number" name="n" required></label><br>
-        <div id="pontos_inputs"></div>
-        <button type="button" onclick="gerarPontos()">Gerar Pontos</button><br>
-        <label>Valor de x para avaliar: <input type="number" step="0.01" name="x_to_evaluate" required></label><br>
-        <button type="submit">Interpolar</button>
-    </form>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-text-centered">Interpolação por Lagrange</h1>
+            <form method="post">
+                <div class="field">
+                    <label class="label">Número de Pontos:</label>
+                    <div class="control">
+                        <input class="input" type="number" name="n" required>
+                    </div>
+                </div>
+                <div id="pontos_inputs"></div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-info" type="button" onclick="gerarPontos()">Gerar Pontos</button>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Valor de x para avaliar:</label>
+                    <div class="control">
+                        <input class="input" type="number" step="0.01" name="x_to_evaluate" required>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Interpolar</button>
+                    </div>
+                </div>
+            </form>
 
-    {% if resultado %}
-        <p>{{ resultado }}</p>
-        <p>{{ polinomio }}</p>
-    {% endif %}
+            {% if resultado %}
+                <div class="notification is-success">
+                    <p>{{ resultado }}</p>
+                    <p>{{ polinomio }}</p>
+                </div>
+            {% endif %}
+        </div>
+    </section>
 
     <script>
         function gerarPontos() {
             const n = document.querySelector('input[name="n"]').value;
             let pontosHtml = '';
             for (let i = 0; i < n; i++) {
-                pontosHtml += `<label>x${i}: <input type="number" name="x${i}" required></label>`;
-                pontosHtml += `<label>y${i}: <input type="number" name="y${i}" required></label><br>`;
+                pontosHtml += `
+                    <div class="field">
+                        <label class="label">x${i}:</label>
+                        <div class="control">
+                            <input class="input" type="number" name="x${i}" required>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label class="label">y${i}:</label>
+                        <div class="control">
+                            <input class="input" type="number" name="y${i}" required>
+                        </div>
+                    </div>
+                `;
             }
             document.getElementById('pontos_inputs').innerHTML = pontosHtml;
         }
     </script>
+    <footer>
+        <div class="rodape">
+            <p>Desenvolvido por: ChatGPT, Thiago França e Lucas Andrey</p>
+        </div>
+    </footer>
 </body>
 </html>
