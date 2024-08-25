@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Linear</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Resolver Sistema Linear</h1>
+    <form method="post">
+        <label>Número de Equações: <input type="number" name="n" required></label><br>
+        <label>Tolerância: <input type="number" step="0.0001" name="tol" required></label><br>
+        <label>Número Máximo de Iterações: <input type="number" name="max_iterations" required></label><br>
+        <label>Método: 
+            <select name="metodo" required>
+                <option value="1">Jacobi</option>
+                <option value="2">Gauss-Seidel</option>
+            </select>
+        </label><br>
+        <div id="matriz_inputs"></div>
+        <button type="button" onclick="gerarMatriz()">Gerar Matriz</button><br>
+        <button type="submit">Resolver</button>
+    </form>
+
+    {% if resultado %}
+        <p>{{ resultado }}</p>
+    {% elif erro %}
+        <p style="color:red;">{{ erro }}</p>
+    {% endif %}
+
+    <script>
+        function gerarMatriz() {
+            const n = document.querySelector('input[name="n"]').value;
+            let matrizHtml = '';
+            for (let i = 0; i < n; i++) {
+                for (let j = 0; j < n; j++) {
+                    matrizHtml += `<label>A[${i}][${j}]: <input type="number" name="a${i}${j}" required></label><br>`;
+                }
+                matrizHtml += `<label>b[${i}]: <input type="number" name="b${i}" required></label><br>`;
+                matrizHtml += `<label>x0[${i}]: <input type="number" name="x0${i}" required></label><br><br>`;
+            }
+            document.getElementById('matriz_inputs').innerHTML = matrizHtml;
+        }
+    </script>
+</body>
+</html>

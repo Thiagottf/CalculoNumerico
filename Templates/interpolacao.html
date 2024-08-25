@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interpolação</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Interpolação por Lagrange</h1>
+    <form method="post">
+        <label>Número de Pontos: <input type="number" name="n" required></label><br>
+        <div id="pontos_inputs"></div>
+        <button type="button" onclick="gerarPontos()">Gerar Pontos</button><br>
+        <label>Valor de x para avaliar: <input type="number" step="0.01" name="x_to_evaluate" required></label><br>
+        <button type="submit">Interpolar</button>
+    </form>
+
+    {% if resultado %}
+        <p>{{ resultado }}</p>
+        <p>{{ polinomio }}</p>
+    {% endif %}
+
+    <script>
+        function gerarPontos() {
+            const n = document.querySelector('input[name="n"]').value;
+            let pontosHtml = '';
+            for (let i = 0; i < n; i++) {
+                pontosHtml += `<label>x${i}: <input type="number" name="x${i}" required></label>`;
+                pontosHtml += `<label>y${i}: <input type="number" name="y${i}" required></label><br>`;
+            }
+            document.getElementById('pontos_inputs').innerHTML = pontosHtml;
+        }
+    </script>
+</body>
+</html>
